@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'item.dart';
+import '../model/item.dart';
 
 class ItemController extends GetxController {
   var items = <Item>[].obs;
@@ -19,6 +19,7 @@ class ItemController extends GetxController {
         name: name, age: age, image: image, phone: phone, country: country);
     itemBox.add(newItem);
     items.add(newItem);
+    items.refresh();
   }
 
   void updateItem(int index, String name, int age, String image, String phone,
@@ -31,10 +32,28 @@ class ItemController extends GetxController {
     item.country = country;
     item.save();
     items[index] = item;
+    items.refresh();
   }
 
-  void deleteItem(int index) {
-    items[index].delete();
-    items.removeAt(index);
+  void deleteItem(int index) async {
+    try {
+      await itemBox.deleteAt(index);
+      items.removeAt(index);
+    } catch (e) {
+      // ignore: avoid_print
+      print("Error Deleting : $e");
+    }
+    items.refresh();
   }
 }
+  // void deleteItem(int index) {
+  //   final key = itemBox.keyAt(index);
+  //   itemBox.delete(key);
+  //   items.removeAt(index);
+  //   items.refresh();
+  // }
+
+  // void deleteItem(int index) {
+  //   itemBox.deleteAt(index);
+  //   items.refresh();
+  // }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_student_management_app/homepage.dart';
+import 'package:getx_student_management_app/view/homepage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'item.dart';
+import 'model/item.dart';
 
 void main() async {
   await Hive.initFlutter();

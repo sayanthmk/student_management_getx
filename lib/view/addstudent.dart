@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_student_management_app/controller.dart';
-import 'package:getx_student_management_app/imagecontroller.dart';
+import 'package:getx_student_management_app/controller/controller.dart';
+import 'package:getx_student_management_app/controller/imagecontroller.dart';
+import 'package:getx_student_management_app/widgets/textfield.dart';
 
 class AddItemPage extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -18,7 +19,27 @@ class AddItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add student')),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Colors.purple,
+        elevation: 16.0,
+        title: const Center(
+          child: Text(
+            "ADD STUDENT",
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+            iconSize: 24,
+            color: Colors.purple,
+            tooltip: "Save",
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -33,7 +54,7 @@ class AddItemPage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundColor: Colors.blue,
+                          backgroundColor: Colors.purple,
                           child: ClipOval(
                             child: imageController
                                     .selectedImagePath.value.isNotEmpty
@@ -45,10 +66,8 @@ class AddItemPage extends StatelessWidget {
                                     height: 120,
                                   )
                                 : const Icon(
-                                    Icons
-                                        .person, // Default icon when no image is selected
-                                    size:
-                                        60, // Adjust size according to your need
+                                    Icons.person,
+                                    size: 60,
                                     color: Colors.white,
                                   ),
                           ),
@@ -79,7 +98,7 @@ class AddItemPage extends StatelessWidget {
                           },
                           child: const CircleAvatar(
                             radius: 20,
-                            backgroundColor: Colors.red,
+                            backgroundColor: Colors.purpleAccent,
                             child: Icon(Icons.add),
                           ),
                         ),
@@ -90,74 +109,39 @@ class AddItemPage extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-
-                TextFormField(
+                CustomTextField(
+                  keyboard: TextInputType.text,
                   controller: nameController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Name'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Name is empty';
-                    } else {
-                      return null;
-                    }
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  labelText: 'Enter name',
+                  prefixIcon: const Icon(Icons.person_2_rounded),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
+                CustomTextField(
+                  keyboard: TextInputType.text,
                   controller: ageController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Age'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Age is empty';
-                    } else {
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.number,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  labelText: 'Enter Age',
+                  prefixIcon: const Icon(Icons.person_2_rounded),
                 ),
-
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
+                CustomTextField(
+                  keyboard: TextInputType.text,
                   controller: phoneController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Phone'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Phone number is empty';
-                    } else {
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.number,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  labelText: 'Enter Phone',
+                  prefixIcon: const Icon(Icons.person_2_rounded),
                 ),
-                //
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
+                CustomTextField(
+                  keyboard: TextInputType.text,
                   controller: countryController,
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Country'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Country is empty';
-                    } else {
-                      return null;
-                    }
-                  },
-                  keyboardType: TextInputType.number,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  labelText: 'Enter Country',
+                  prefixIcon: const Icon(Icons.person_2_rounded),
                 ),
-
                 const SizedBox(height: 50),
                 InkWell(
                   onTap: () {
@@ -173,12 +157,19 @@ class AddItemPage extends StatelessWidget {
                     }
                   },
                   child: Container(
-                    height: 50,
-                    width: 100,
+                    height: 70,
+                    width: 200,
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.deepPurple[200],
                         borderRadius: BorderRadius.circular(20)),
-                    child: const Center(child: Text("Add")),
+                    child: const Center(
+                        child: Text(
+                      "ADD",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
+                    )),
                   ),
                 ),
               ],
@@ -189,34 +180,3 @@ class AddItemPage extends StatelessWidget {
     );
   }
 }
-// TextFormField(
-//   controller: nameController,
-//   decoration: const InputDecoration(labelText: 'Name'),
-// ),
-// ElevatedButton(
-//   onPressed: () {
-//     itemController.addItem(
-//       nameController.text,
-//       int.parse(ageController.text),
-//       imageController.selectedImagePath.value,
-//       phoneController.text,
-//       countryController.text,
-//     );
-//     Get.back();
-//   },
-//   child: const Text('Add Item'),
-// ),
-// TextFormField(
-//   controller: countryController,
-//   decoration: const InputDecoration(labelText: 'Country'),
-// ),
-// TextFormField(
-//   controller: phoneController,
-//   decoration: const InputDecoration(labelText: 'Phone'),
-//   keyboardType: TextInputType.phone,
-// ),
-// TextFormField(
-//   controller: ageController,
-//   decoration: const InputDecoration(labelText: 'Age'),
-//   keyboardType: TextInputType.number,
-// ),
